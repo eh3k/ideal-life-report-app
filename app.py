@@ -153,7 +153,7 @@ overlay_questions = [
 st.header("Part 2: Expression Overlay")
 overlay_scores = {}
 
-for i, (question, options) in enumerate(overlay_questions, 1):
+for i, (option, question) in enumerate(overlay_questions, 1):
     st.subheader(f"{i}. {question}")
     labels = [f"{key}: {desc}" for key, (_, desc) in options.items()]
     response = st.radio("", labels, key=f"overlay_q{i}")
