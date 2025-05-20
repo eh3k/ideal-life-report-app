@@ -170,6 +170,7 @@ if st.session_state.get("avatar_selected"):
     overlay_count = Counter(overlay_responses)
     top_overlay = overlay_count.most_common(1)[0][0]
     st.session_state["overlay"] = top_overlay
+    st.session_state["overlay_calculated"] = True
 
     # Load description data from the report generator file
     result = df[
@@ -198,6 +199,7 @@ if st.session_state.get("avatar_selected"):
     "Reflective Thinker": "You live out your calling as a Reflective Thinker — someone who processes deeply and distills clarity from complexity. This means you need time, space, and solitude to develop meaningful insight. Others experience you as thoughtful, wise, and discerning. When aligned, your style reveals truth and direction; when misaligned, it may appear withdrawn, overly analytical, or disconnected.",
     "Joyful Connector": "You live out your calling as a Joyful Connector — someone who energizes others and infuses environments with warmth. This means you share your purpose through presence, affirmation, and community. Others experience you as uplifting, lively, and contagious in your enthusiasm. When aligned, your style brings life and encouragement; when misaligned, it may show up as scattered focus or avoidance of depth."
 }
-st.write(overlay_narratives.get(row['Expression Overlay'], row['Overlay Description']))
+overlay_description = overlay_narratives.get(row['Expression Overlay'], row['Overlay Description'])
+        st.write(overlay_description)
     else:
         st.warning("No complete narrative match found for this combination. Please verify the dataset.")
