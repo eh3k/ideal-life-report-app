@@ -13,6 +13,12 @@ st.set_page_config(page_title="IDEAL LIFE Assessment", layout="centered")
 st.title("IDEAL LIFE™ Discovery Assessment")
 st.markdown("Answer the following questions to discover your Avatar, Wings, and Expression Overlay.")
 
+# Reset button logic
+if st.sidebar.button("Reset Assessment"):
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]
+    st.experimental_rerun()
+    
 # -----------------------------
 # Avatar Assessment Questions
 # -----------------------------
@@ -99,7 +105,7 @@ for i, (question, options) in enumerate(avatar_questions, 1):
     st.subheader(f"{i}. {question}")
     labels = [f"{key}: {text}" for key, (_, text) in options.items()]
     response = st.radio("", labels, key=f"avatar_q{i}")
-    selected_key = response.split(":")[0]
+    selected_key = response.split(":")[0].strip()
     selected_avatar = options[selected_key][0]
     avatar_scores[selected_avatar] = avatar_scores.get(selected_avatar, 0) + 1
 
@@ -157,10 +163,10 @@ for i, (question, options) in enumerate(overlay_questions, 1):
     st.subheader(f"{i}. {question}")
     labels = [f"{key}: {desc}" for key, (_, desc) in options.items()]
     response = st.radio("", labels, key=f"overlay_q{i}")
-    selected_key = response.split(":")[0]
+    selected_key = response.split(":")[0].strip()
     selected_overlay = options[selected_key][0]
     overlay_scores[selected_overlay] = overlay_scores.get(selected_overlay, 0) + 1
-
+    
 # -----------------------------
 # Calculate and Display Results
 # -----------------------------
@@ -181,7 +187,6 @@ if st.button("Calculate My Profile"):
 
     st.subheader(f"Expression Overlay: {expression_overlay}")
 
-    # Lookup full narrative report if available
     match = df[(df["Primary Avatar"] == primary_avatar) &
                (df["Wing Avatar"].isin(wing_avatars)) &
                (df["Expression Overlay"] == expression_overlay)]
