@@ -13,10 +13,6 @@ st.set_page_config(page_title="IDEAL LIFE Assessment", layout="centered")
 st.title("IDEAL LIFE™ Discovery Assessment")
 st.markdown("Answer the following questions to discover your Avatar, Wings, and Expression Overlay.")
 
-if st.session_state.get("reset"):
-    st.session_state.clear()
-    st.experimental_rerun()
-
 # -----------------------------
 # Avatar Assessment Questions
 # -----------------------------
@@ -108,7 +104,7 @@ for i, (question, options) in enumerate(avatar_questions, 1):
     avatar_scores[selected_avatar] = avatar_scores.get(selected_avatar, 0) + 1
 
 # -----------------------------
-# Overlay Questions
+# Expression Overlay Assessment
 # -----------------------------
 
 overlay_questions = [
@@ -166,7 +162,7 @@ for i, (question, options) in enumerate(overlay_questions, 1):
     overlay_scores[selected_overlay] = overlay_scores.get(selected_overlay, 0) + 1
 
 # -----------------------------
-# Results Section
+# Calculate and Display Results
 # -----------------------------
 
 if st.button("Calculate My Profile"):
@@ -185,6 +181,7 @@ if st.button("Calculate My Profile"):
 
     st.subheader(f"Expression Overlay: {expression_overlay}")
 
+    # Lookup full narrative report if available
     match = df[(df["Primary Avatar"] == primary_avatar) &
                (df["Wing Avatar"].isin(wing_avatars)) &
                (df["Expression Overlay"] == expression_overlay)]
@@ -198,8 +195,3 @@ if st.button("Calculate My Profile"):
         st.write(report["Overlay Description"])
     else:
         st.warning("A full narrative profile could not be found for this combination.")
-
-    st.markdown("---")
-    if st.button("Reset Assessment"):
-        st.session_state["reset"] = True
-        st.experimental_rerun()
