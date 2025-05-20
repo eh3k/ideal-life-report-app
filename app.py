@@ -166,7 +166,14 @@ for i, (question, options) in enumerate(overlay_questions, 1):
 # Calculate and Display Results
 # -----------------------------
 
+if "calculated" not in st.session_state:
+    st.session_state.calculated = False
+
 if st.button("Calculate My Profile"):
+    st.session_state.calculated = True
+
+if st.session_state.calculated:
+
     primary_avatar = max(avatar_scores, key=avatar_scores.get)
     wings = sorted(avatar_scores.items(), key=lambda x: -x[1])
     wing_avatars = [w[0] for w in wings if w[0] != primary_avatar][:2]
@@ -195,7 +202,6 @@ if st.button("Calculate My Profile"):
         st.write(report["Overlay Description"])
     else:
         st.warning("A full narrative profile could not be found for this combination.")
-
 
     # Add reset button at the bottom of the form
     if st.button("Reset Assessment"):
