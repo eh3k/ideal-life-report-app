@@ -13,12 +13,7 @@ st.set_page_config(page_title="IDEAL LIFE Assessment", layout="centered")
 st.title("IDEAL LIFE™ Discovery Assessment")
 st.markdown("Answer the following questions to discover your Avatar, Wings, and Expression Overlay.")
 
-# Reset button logic
-if st.sidebar.button("Reset Assessment"):
-    for key in list(st.session_state.keys()):
-        del st.session_state[key]
-    st.experimental_rerun()
-    
+
 # -----------------------------
 # Avatar Assessment Questions
 # -----------------------------
@@ -200,3 +195,10 @@ if st.button("Calculate My Profile"):
         st.write(report["Overlay Description"])
     else:
         st.warning("A full narrative profile could not be found for this combination.")
+
+
+    # Add reset button at the bottom of the form
+    if st.button("Reset Assessment"):
+        for key in list(st.session_state.keys()):
+            del st.session_state[key]
+        st.experimental_rerun()
