@@ -203,3 +203,4 @@ if st.button("Calculate My Profile"):
     if st.button("Reset Assessment"):
         st.session_state["reset"] = True
         st.experimental_rerun()
+
